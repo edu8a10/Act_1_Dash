@@ -1,0 +1,233 @@
+---
+title: "Análisis del comportamiento por genero - Carrera de la luz (Cali - 2022)"
+output: 
+  flexdashboard::flex_dashboard:
+    theme:
+      bg: "#FFFFFF"
+      fg: "#000000" 
+      primary: "#EEEEEE"
+      base_font:
+        google: Prompt
+      code_font:
+        google: JetBrains Mono
+    orientation: rows
+    vertical_layout: fill
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(paqueteMET)
+library(dplyr)
+data("CarreraLuz22")
+library(ggplot2)
+library(RColorBrewer)
+
+
+```
+
+## Row {data-height=10}
+
+### Chart A #{.value-box}
+
+```{r, fig.width=1,fig.height=1}
+
+time_h <- CarreraLuz22[CarreraLuz22$sex == "Hombre" & CarreraLuz22$timerun == min(CarreraLuz22$timerun[CarreraLuz22$sex == "Hombre"]), ]
+edad_hombre_mas_rapido <- time_h$edad
+tiempo_hombre_mas_rapido <- time_h$timerun/60
+
+valueBox(value =paste(round(tiempo_hombre_mas_rapido,0), "min"), 
+         caption = "Mejor tiempo", 
+         icon = "fa-clock", 
+         color = "#0C4271")
+
+```
+
+### Chart B {.value-box}
+
+```{r, fig.width=1,fig.height=1}
+
+time_h <- CarreraLuz22[CarreraLuz22$sex == "Hombre" & CarreraLuz22$timerun == min(CarreraLuz22$timerun[CarreraLuz22$sex == "Hombre"]), ]
+
+edad_hombre_mas_rapido <- time_h$edad
+
+valueBox(value =paste(round(edad_hombre_mas_rapido,0), "años"), 
+         caption = "Edad", 
+         icon = "fa-male", 
+         color = "#0C4271")
+
+```
+
+### Chart C {.value-box}
+
+```{r, fig.width=1,fig.height=1}
+
+time_h <- CarreraLuz22[CarreraLuz22$sex == "Hombre", ]
+
+participantes_hombres <- nrow(time_h)
+
+value = paste(format(round(participantes_hombres,0), big.mark = "."), "hombres")
+
+valueBox(value = value,
+         caption = "Participantes",
+         icon = "fa-people-carry",
+         color = "#0C4271")
+
+```
+
+### Chart D {.value-box}
+
+```{r, fig.width=1,fig.height=1}
+
+time_m <- CarreraLuz22[CarreraLuz22$sex == "Mujer" & CarreraLuz22$timerun == min(CarreraLuz22$timerun[CarreraLuz22$sex == "Mujer"]), ]
+
+tiempo_mujer_mas_rapida <- time_m$timerun/60
+
+valueBox(value =paste(round(tiempo_mujer_mas_rapida,0), "min"), 
+         caption = "Mejor tiempo", 
+         icon = "fa-clock", 
+         color = "#6BAED6")
+
+```
+
+### Chart E {.value-box}
+
+```{r, fig.width=1,fig.height=1}
+
+time_m <- CarreraLuz22[CarreraLuz22$sex == "Mujer" & CarreraLuz22$timerun == min(CarreraLuz22$timerun[CarreraLuz22$sex == "Mujer"]), ]
+
+edad_mjujer_mas_rapida <- time_m$edad
+
+valueBox(value =paste(round(edad_mjujer_mas_rapida,0), "años"), 
+         caption = "Edad", 
+         icon = "fa-female", 
+         color = "#6BAED6")
+
+```
+
+### Chart F {.value-box}
+
+```{r, fig.width=1,fig.height=1}
+
+time_m <- CarreraLuz22[CarreraLuz22$sex == "Mujer", ]
+participantes_mujeres <- nrow(time_m)
+value = paste(format(round(participantes_mujeres,0), big.mark = "."), "mujeres")
+valueBox(value = value,
+         caption = "Participantes",
+         icon = "fa-people-carry",
+         color = "#6BAED6")
+
+```
+
+## Row {data-height=10,data-width=10}
+
+### Dispersión de tiempos
+
+```{r, fig.width=28,fig.height=10}
+
+paleta <- c("#0C4271", "#6BAED6")
+
+ggplot(CarreraLuz22, aes(y=edad , x=timerun/60, color=factor(sex))) +
+  geom_point(size=6) + #Tamaño de los puntos
+  facet_wrap(~ sex,strip.position = "bottom") +
+  scale_color_manual(values=paleta,labels = c("Hombre", "Mujer"))+
+  guides(colour = guide_legend(title.theme = element_text(size=30)))+
+  labs(color = "Género",x="Tiempo en llegar (min)",y="Edad") +
+  theme(strip.background = element_blank(),
+        strip.text.x = element_blank(),
+  legend.text=element_text(size=30), #Tamaño del nombre de los elementos de la leyenda
+  axis.title.y = element_text(size = 35), #Tamaño del título del eje Y
+  axis.text.y = element_text(size = 25), #Tamaño de los valores del eje Y
+  axis.title.x = element_text(size = 35), #Tamaño del título del eje X
+  axis.text.x = element_text(size = 25) #Tamaño de los valores del eje X
+  )
+
+```
+
+### Medidas de TC
+
+```{r, fig.width=27,fig.height=10}
+
+ggplot(CarreraLuz22, aes(x = sex, y = timerun/60 )) +
+  geom_boxplot(aes(fill = sex),alpha = 1,size=1) + #Transparencia de las cajas
+  # facet_wrap(~sex, ncol=1, labeller = labeller(dose = etiquetas))+
+  #geom_jitter(size = 1,alpha = 0.5) +
+  labs(title = "", y= "Tiempo en llegar (min)", x= "Género")+
+  scale_y_continuous(limits = c(30, 120)) +
+  scale_fill_brewer() +
+  scale_fill_manual(values = c("#0C4271", "#6BAED6"))+#, "#034A94", "#0570E1", "#3998FB","#37B6FC"))+
+  theme(legend.position = "none",
+  legend.text=element_text(size=30), #Tamaño del nombre de los elementos de la leyenda
+  axis.title.y = element_text(size = 35), #Tamaño del título del eje Y
+  axis.text.y = element_text(size = 25), #Tamaño de los valores del eje Y
+  axis.title.x = element_text(size = 35), #Tamaño del título del eje X
+  axis.text.x = element_text(size = 25) #Tamaño de los valores del eje X
+  )
+
+```
+
+## Row {data-height=10}
+
+### Top 10 mejores promedios de tiempos por ciudades (hombres) {data-width="104"}
+
+```{r, fig.width=30,fig.height=11}
+t2 = aggregate(CarreraLuz22$timerun/60,
+               by=list(CarreraLuz22$origen,CarreraLuz22$sex), FUN= mean)
+t2_hombre = subset(t2, t2$Group.2=="Hombre")
+t2_hombre = t2_hombre[order(t2_hombre$x),]
+top_10_hombres = head(t2_hombre, 10)
+
+#Creación de gráficas:
+
+ggplot(top_10_hombres, aes(x = Group.1, y = x, fill = Group.1)) +
+geom_bar(stat = "identity") +
+labs(y = "Promedio", x = "Origen") +
+scale_fill_brewer(guide = guide_legend(title = "Origen"))+ #Escala de colores automatica para las barras y nombre del cuadro de leyenda
+geom_text(aes(label = round(x, 2), y = x, group = 1),position = position_dodge(0.9), vjust = -0.25,size=10) + #Configura las etiquetas de datos encima de las barras
+theme	(
+		legend.position = "top", #Posición de la leyenda
+		legend.direction = "horizontal", #Orientación de la leyenda
+		axis.text.x = element_blank(), #Quita los valores del eje X
+		axis.title.x = element_blank(), #Quita los titlos del eje X
+		axis.line.y = element_blank(), #Quita los calores del eje Y
+		axis.text.y = element_blank(), #Quita los valores del eje Y
+		axis.title.y = element_text(size = 40), #Tamaño del titulo del eje Y
+		legend.key.size = unit(1.5, "cm"), #Tamaño del cuadro de leyenda
+		legend.text=element_text(size=40), 
+		legend.title=element_text(size=40,face="bold",hjust=0.5) #Tamaño del titulo de la leyenda
+		)+
+scale_fill_manual(values = c("#F7FBFF","#DEEBF7","#C6DBEF","#9ECAE1","#6BAED6","#4292C6","#2171B5","#08519C","#08306B","#13005A"),, name = "Origen") #Escala de colores para las barras y nombre del cuadro de leyenda
+
+```
+
+### Top 10 mejores promedios de tiempos por ciudades (mujeres) {data-width="101"}
+
+```{r, fig.width=30,fig.height=11}
+
+t2 = aggregate(CarreraLuz22$timerun/60,
+               by=list(CarreraLuz22$origen,CarreraLuz22$sex), FUN= mean)
+t2_mujer = subset(t2, t2$Group.2=="Mujer")
+t2_mujer = t2_mujer[order(t2_mujer$x),]
+top_10_mujeres = head(t2_mujer, 10)
+
+#Creación de gráficas:
+
+ggplot(top_10_mujeres, aes(x = Group.1, y = x, fill = Group.1)) +
+geom_bar(stat = "identity") +
+labs(y = "Promedio", x = "Origen") +
+#scale_fill_brewer(guide = guide_legend(title = "Origen"))+ #Escala de colores automatica para las barras
+geom_text(aes(label = round(x, 2), y = x, group = 1),position = position_dodge(0.9), vjust = -0.25,size=10) +
+theme	(
+		legend.position = "top",
+		legend.direction = "horizontal",
+		axis.text.x = element_blank(),
+		axis.title.x = element_blank(),
+		axis.line.y = element_blank(),
+		axis.text.y = element_blank(),
+		axis.title.y = element_text(size = 40),
+		legend.key.size = unit(1.5, "cm"),
+		legend.text=element_text(size=40),
+		legend.title=element_text(size=40,face="bold",hjust=0.5)
+		)+
+scale_fill_manual(values = c("#F7FBFF","#DEEBF7","#C6DBEF","#9ECAE1","#6BAED6","#4292C6","#2171B5","#08519C","#08306B","#13005A"), name = "Origen")
+
+```
