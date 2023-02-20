@@ -169,7 +169,7 @@ ggplot(CarreraLuz22, aes(x = sex, y = timerun/60 )) +
 
 ### Top 10 mejores promedios de tiempos por ciudades (hombres) {data-width="104"}
 
-```{r, fig.width=43,fig.height=11}
+```{r, fig.width=45,fig.height=11}
 t2 = aggregate(CarreraLuz22$timerun/60,
                by=list(CarreraLuz22$origen,CarreraLuz22$sex), FUN= mean)
 t2_hombre = subset(t2, t2$Group.2=="Hombre")
@@ -201,7 +201,7 @@ scale_fill_manual(values = c("#F7FBFF","#DEEBF7","#C6DBEF","#9ECAE1","#6BAED6","
 
 ### Top 10 mejores promedios de tiempos por ciudades (mujeres) {data-width="101"}
 
-```{r, fig.width=42,fig.height=11}
+```{r, fig.width=44,fig.height=11}
 
 t2 = aggregate(CarreraLuz22$timerun/60,
                by=list(CarreraLuz22$origen,CarreraLuz22$sex), FUN= mean)
