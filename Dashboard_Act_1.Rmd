@@ -118,11 +118,11 @@ valueBox(value = value,
 
 ```
 
-## Row {data-height=10,data-width=10}
+## Row {data-height=100,data-width=10}
 
 ### Dispersión de tiempos
 
-```{r, fig.width=28,fig.height=10}
+```{r, fig.width=37,fig.height=11}
 
 paleta <- c("#0C4271", "#6BAED6")
 
@@ -145,7 +145,7 @@ ggplot(CarreraLuz22, aes(y=edad , x=timerun/60, color=factor(sex))) +
 
 ### Medidas de TC
 
-```{r, fig.width=27,fig.height=10}
+```{r, fig.width=36,fig.height=11}
 
 ggplot(CarreraLuz22, aes(x = sex, y = timerun/60 )) +
   geom_boxplot(aes(fill = sex),alpha = 1,size=1) + #Transparencia de las cajas
@@ -165,11 +165,11 @@ ggplot(CarreraLuz22, aes(x = sex, y = timerun/60 )) +
 
 ```
 
-## Row {data-height=10}
+## Row {data-height=100}
 
 ### Top 10 mejores promedios de tiempos por ciudades (hombres) {data-width="104"}
 
-```{r, fig.width=30,fig.height=11}
+```{r, fig.width=36,fig.height=11}
 t2 = aggregate(CarreraLuz22$timerun/60,
                by=list(CarreraLuz22$origen,CarreraLuz22$sex), FUN= mean)
 t2_hombre = subset(t2, t2$Group.2=="Hombre")
@@ -201,7 +201,7 @@ scale_fill_manual(values = c("#F7FBFF","#DEEBF7","#C6DBEF","#9ECAE1","#6BAED6","
 
 ### Top 10 mejores promedios de tiempos por ciudades (mujeres) {data-width="101"}
 
-```{r, fig.width=30,fig.height=11}
+```{r, fig.width=35,fig.height=11}
 
 t2 = aggregate(CarreraLuz22$timerun/60,
                by=list(CarreraLuz22$origen,CarreraLuz22$sex), FUN= mean)
@@ -231,3 +231,11 @@ theme	(
 scale_fill_manual(values = c("#F7FBFF","#DEEBF7","#C6DBEF","#9ECAE1","#6BAED6","#4292C6","#2171B5","#08519C","#08306B","#13005A"), name = "Origen")
 
 ```
+
+## Row {data-height=10,data-width=1}
+
+### Conclusiones
+
+**Tiempo de carrera:** si bien es cierto que la cantidad de hombres que participaron en la carrera fue superior al de las mujeres, a evaluar por la ubicación de lso quariles, estos tuvieron un mejor desempeño a nivel de tiempos de llegada.
+
+**Correlación tiempo/edad:** no se evidencia una relación directa lo suficientemente marcada entre el tiempo que le tomó a una persona el completar la carrera y la edad de esta.
