@@ -1,5 +1,5 @@
 ---
-title: "Análisis del comportamiento por genero - Carrera de la luz (Cali - 2022)"
+title: "ANALISIS DEL COMPORTAMIENTO POR GENERO - Carrera de la luz (Cali - 2022)"
 output: 
   flexdashboard::flex_dashboard:
     theme:
