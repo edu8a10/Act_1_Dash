@@ -145,7 +145,7 @@ ggplot(CarreraLuz22, aes(y=edad , x=timerun/60, color=factor(sex))) +
 
 ### Medidas de TC
 
-```{r, fig.width=38,fig.height=11}
+```{r, fig.width=39,fig.height=11}
 
 ggplot(CarreraLuz22, aes(x = sex, y = timerun/60 )) +
   geom_boxplot(aes(fill = sex),alpha = 1,size=1) + #Transparencia de las cajas
