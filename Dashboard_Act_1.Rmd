@@ -232,10 +232,12 @@ scale_fill_manual(values = c("#F7FBFF","#DEEBF7","#C6DBEF","#9ECAE1","#6BAED6","
 
 ```
 
-## Row {data-height=10,data-width=1}
+## Row {.tabset data-height=25,data-width=1}
 
 ### Conclusiones
 
-**Tiempo de carrera:** si bien es cierto que la cantidad de hombres que participaron en la carrera fue superior al de las mujeres, a evaluar por la ubicación de lso quariles, estos tuvieron un mejor desempeño a nivel de tiempos de llegada.
+**Tiempo de carrera:** si bien es cierto que la cantidad de hombres que participaron en la carrera fue superior al de las mujeres, a evaluar por la ubicación de los quariles de cada grupo, estos tuvieron un mejor desempeño a nivel de tiempos de llegada.
+
+### Relaciones 
 
 **Correlación tiempo/edad:** no se evidencia una relación directa lo suficientemente marcada entre el tiempo que le tomó a una persona el completar la carrera y la edad de esta.
